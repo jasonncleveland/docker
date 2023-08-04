@@ -8,7 +8,7 @@ include:
 services:
   # Router setup
   router:
-    image: mongo:5.0
+    image: mongo:5.0.17
     container_name: router
     command: mongos --configdb cfgrs/configs1:27019,configs2:27019,configs3:27019 --bind_ip 0.0.0.0 --port 27017
     depends_on:
@@ -29,7 +29,7 @@ services:
       - cluster_subnet
 
   routersetup:
-    image: mongo:5.0
+    image: mongo:5.0.17
     container_name: routersetup
     command: mongo --host router:27017 /usr/local/etc/mongo/router-init.js
     depends_on:

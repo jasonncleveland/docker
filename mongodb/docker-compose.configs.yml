@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Config setup
   configs1:
-    image: mongo:5.0
+    image: mongo:5.0.17
     container_name: configs1
     command: mongod --configsvr --replSet cfgrs
     volumes:
@@ -12,7 +12,7 @@ services:
       - cluster_subnet
 
   configs2:
-    image: mongo:5.0
+    image: mongo:5.0.17
     container_name: configs2
     command: mongod --configsvr --replSet cfgrs
     volumes:
@@ -21,7 +21,7 @@ services:
       - cluster_subnet
 
   configs3:
-    image: mongo:5.0
+    image: mongo:5.0.17
     container_name: configs3
     command: mongod --configsvr --replSet cfgrs
     volumes:
@@ -30,7 +30,7 @@ services:
       - cluster_subnet
 
   configsetup:
-    image: mongo:5.0
+    image: mongo:5.0.17
     container_name: configsetup
     command: mongo --host configs1:27019 /usr/local/etc/mongo/config-init.js
     depends_on:
