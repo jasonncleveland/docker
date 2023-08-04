@@ -1,129 +1,11 @@
 version: '3.8'
 
+include:
+  - docker-compose.networks.yml
+  - docker-compose.configs.yml
+  - docker-compose.shards.yml
+
 services:
-  # Config setup
-  configs1:
-    image: mongo:5.0
-    container_name: configs1
-    command: mongod --configsvr --replSet cfgrs
-    volumes:
-      - configs1:/data/db
-    networks:
-      - cluster_subnet
-
-  configs2:
-    image: mongo:5.0
-    container_name: configs2
-    command: mongod --configsvr --replSet cfgrs
-    volumes:
-      - configs2:/data/db
-    networks:
-      - cluster_subnet
-
-  configs3:
-    image: mongo:5.0
-    container_name: configs3
-    command: mongod --configsvr --replSet cfgrs
-    volumes:
-      - configs3:/data/db
-    networks:
-      - cluster_subnet
-
-  configsetup:
-    image: mongo:5.0
-    container_name: configsetup
-    command: mongo --host configs1:27019 /usr/local/etc/mongo/config-init.js
-    depends_on:
-      - configs1
-      - configs2
-      - configs3
-    volumes:
-      - ./config-init.js:/usr/local/etc/mongo/config-init.js:ro
-    networks:
-      - cluster_subnet
-
-  # Shard 1 setup
-  shard1s1:
-    image: mongo:5.0
-    container_name: shard1s1
-    command: mongod --shardsvr --replSet shard1rs
-    volumes:
-      - shard1s1:/data/db
-    networks:
-      - cluster_subnet
-
-  shard1s2:
-    image: mongo:5.0
-    container_name: shard1s2
-    command: mongod --shardsvr --replSet shard1rs
-    volumes:
-      - shard1s2:/data/db
-    networks:
-      - cluster_subnet
-
-  shard1s3:
-    image: mongo:5.0
-    container_name: shard1s3
-    command: mongod --shardsvr --replSet shard1rs
-    volumes:
-      - shard1s3:/data/db
-    networks:
-      - cluster_subnet
-
-  shard1setup:
-    image: mongo:5.0
-    container_name: shard1setup
-    command: mongo --host shard1s1:27018 /usr/local/etc/mongo/shard-init.js
-    depends_on:
-      - shard1s1
-      - shard1s2
-      - shard1s3
-    volumes:
-      - ./shard1-init.js:/usr/local/etc/mongo/shard-init.js:ro
-    networks:
-      - cluster_subnet
-
-  # Shard 2 setup
-  shard2s1:
-    image: mongo:5.0
-    container_name: shard2s1
-    command: mongod --shardsvr --replSet shard2rs
-    volumes:
-      - shard2s1:/data/db
-    networks:
-      - cluster_subnet
-
-  shard2s2:
-    image: mongo:5.0
-    container_name: shard2s2
-    command: mongod --shardsvr --replSet shard2rs
-    volumes:
-      - shard2s2:/data/db
-    networks:
-      - cluster_subnet
-
-  shard2s3:
-    image: mongo:5.0
-    container_name: shard2s3
-    command: mongod --shardsvr --replSet shard2rs
-    volumes:
-      - shard2s3:/data/db
-    networks:
-      - cluster_subnet
-
-  shard2setup:
-    image: mongo:5.0
-    container_name: shard2setup
-    command: mongo --host shard2s1:27018 /usr/local/etc/mongo/shard-init.js
-    depends_on:
-      - shard2s1
-      - shard2s2
-      - shard2s3
-    volumes:
-      - ./shard2-init.js:/usr/local/etc/mongo/shard-init.js:ro
-    networks:
-      - cluster_subnet
-
   # Router setup
   router:
     image: mongo:5.0
@@ -159,20 +41,4 @@ services:
       - cluster_subnet
 
 volumes:
-  configs1:
-  configs2:
-  configs3:
-  shard1s1:
-  shard1s2:
-  shard1s3:
-  shard2s1:
-  shard2s2:
-  shard2s3:
   router:
-
-networks:
-  cluster_subnet:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.27.17.0/24

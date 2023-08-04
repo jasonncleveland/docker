@@ -1,0 +1,8 @@
+version: '3.8'
+
+networks:
+  cluster_subnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.27.17.0/24
