@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   # Shard 1 setup
   shard1s1:
-    image: mongo:5.0.17
+    image: mongo:7.0.17
     container_name: shard1s1
     command: mongod --shardsvr --replSet shard1rs
     volumes:
@@ -12,7 +10,7 @@ services:
       - cluster_subnet
 
   shard1s2:
-    image: mongo:5.0.17
+    image: mongo:7.0.17
     container_name: shard1s2
     command: mongod --shardsvr --replSet shard1rs
     volumes:
@@ -21,7 +19,7 @@ services:
       - cluster_subnet
 
   shard1s3:
-    image: mongo:5.0.17
+    image: mongo:7.0.17
     container_name: shard1s3
     command: mongod --shardsvr --replSet shard1rs
     volumes:
@@ -29,10 +27,10 @@ services:
     networks:
       - cluster_subnet
 
-  shard1setup:
-    image: mongo:5.0.17
-    container_name: shard1setup
-    command: mongo --host shard1s1:27018 /usr/local/etc/mongo/shard-init.js
+  shard1-setup:
+    image: mongo:7.0.17
+    container_name: shard1-setup
+    command: mongosh --host shard1s1:27018 /usr/local/etc/mongo/shard-init.js
     depends_on:
       - shard1s1
       - shard1s2
@@ -44,7 +42,7 @@ services:
 
   # Shard 2 setup
   shard2s1:
-    image: mongo:5.0.17
+    image: mongo:7.0.17
     container_name: shard2s1
     command: mongod --shardsvr --replSet shard2rs
     volumes:
@@ -53,7 +51,7 @@ services:
       - cluster_subnet
 
   shard2s2:
-    image: mongo:5.0.17
+    image: mongo:7.0.17
     container_name: shard2s2
     command: mongod --shardsvr --replSet shard2rs
     volumes:
@@ -62,7 +60,7 @@ services:
       - cluster_subnet
 
   shard2s3:
-    image: mongo:5.0.17
+    image: mongo:7.0.17
     container_name: shard2s3
     command: mongod --shardsvr --replSet shard2rs
     volumes:
@@ -70,10 +68,10 @@ services:
     networks:
       - cluster_subnet
 
-  shard2setup:
-    image: mongo:5.0.17
-    container_name: shard2setup
-    command: mongo --host shard2s1:27018 /usr/local/etc/mongo/shard-init.js
+  shard2-setup:
+    image: mongo:7.0.17
+    container_name: shard2-setup
+    command: mongosh --host shard2s1:27018 /usr/local/etc/mongo/shard-init.js
     depends_on:
       - shard2s1
       - shard2s2

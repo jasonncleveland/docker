@@ -1,5 +1,3 @@
-version: '3.8'
-
 include:
   - docker-compose.networks.yml
   - docker-compose.configs.yml
@@ -8,19 +6,19 @@ include:
 services:
   # Router setup
   router:
-    image: mongo:5.0.17
+    image: mongo:7.0.17
     container_name: router
     command: mongos --configdb cfgrs/configs1:27019,configs2:27019,configs3:27019 --bind_ip 0.0.0.0 --port 27017
     depends_on:
-      - configsetup
-      - shard1setup
-      - shard2setup
+      - config-setup
+      - shard1-setup
+      - shard2-setup
     healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
-      interval: 5s
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 1s
       timeout: 5s
       retries: 3
-      start_period: 5s
+      start_period: 2s
     ports:
       - '27017:27017'
     volumes:
@@ -28,10 +26,10 @@ services:
     networks:
       - cluster_subnet
 
-  routersetup:
-    image: mongo:5.0.17
-    container_name: routersetup
-    command: mongo --host router:27017 /usr/local/etc/mongo/router-init.js
+  router-setup:
+    image: mongo:7.0.17
+    container_name: router-setup
+    command: mongosh --host router:27017 /usr/local/etc/mongo/router-init.js
     depends_on:
       router:
         condition: service_healthy
