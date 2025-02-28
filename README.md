@@ -9,7 +9,7 @@ The mongodb cluster consists of 2 shards, with 1 primary and 2 secondary nodes f
 ### How to run
 
 The docker compose is set up so that the containers will build once their dependencies are ready.
-To start the cluster, run `docker-compose -f mongodb/docker-compose.yml up -d`
+To start the cluster, run `docker compose -f mongodb/docker-compose.yml up -d`
 
 ### How to connect
 
@@ -27,7 +27,7 @@ The redis cluster consists of 6 nodes, 3 master nodes and 3 replica nodes, one f
 ### How to run
 
 The docker compose is set up so that the containers will build once their dependencies are ready.
-To start the cluster, run `docker-compose -f redis/docker-compose.yml up -d`
+To start the cluster, run `docker compose -f redis/docker-compose.yml up -d`
 
 ### How to connect
 

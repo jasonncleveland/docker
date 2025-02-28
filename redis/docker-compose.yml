@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   redis-node-1:
-    image: redis:6.0
+    image: valkey/valkey:8.0.0
     container_name: redis-node-1
     command: redis-server /usr/local/etc/redis/redis.conf
     healthcheck:
@@ -21,7 +19,7 @@ services:
         ipv4_address: 10.63.79.11
 
   redis-node-2:
-    image: redis:6.0
+    image: valkey/valkey:8.0.0
     container_name: redis-node-2
     command: redis-server /usr/local/etc/redis/redis.conf
     healthcheck:
@@ -40,7 +38,7 @@ services:
         ipv4_address: 10.63.79.12
 
   redis-node-3:
-    image: redis:6.0
+    image: valkey/valkey:8.0.0
     container_name: redis-node-3
     command: redis-server /usr/local/etc/redis/redis.conf
     healthcheck:
@@ -59,7 +57,7 @@ services:
         ipv4_address: 10.63.79.13
 
   redis-node-4:
-    image: redis:6.0
+    image: valkey/valkey:8.0.0
     container_name: redis-node-4
     command: redis-server /usr/local/etc/redis/redis.conf
     healthcheck:
@@ -78,7 +76,7 @@ services:
         ipv4_address: 10.63.79.14
 
   redis-node-5:
-    image: redis:6.0
+    image: valkey/valkey:8.0.0
     container_name: redis-node-5
     command: redis-server /usr/local/etc/redis/redis.conf
     healthcheck:
@@ -97,7 +95,7 @@ services:
         ipv4_address: 10.63.79.15
 
   redis-node-6:
-    image: redis:6.0
+    image: valkey/valkey:8.0.0
     container_name: redis-node-6
     command: redis-server /usr/local/etc/redis/redis.conf
     healthcheck:
@@ -116,8 +114,8 @@ services:
         ipv4_address: 10.63.79.16
 
   redis-cluster-setup:
-    image: redis:6.0
-    command: redis-cli --cluster create 10.63.79.11:6381 10.63.79.12:6382 10.63.79.13:6383 10.63.79.14:6384 10.63.79.15:6385 10.63.79.16:6386 --cluster-replicas 1 --cluster-yes
+    image: valkey/valkey:8.0.0
+    command: valkey-cli --cluster create 10.63.79.11:6381 10.63.79.12:6382 10.63.79.13:6383 10.63.79.14:6384 10.63.79.15:6385 10.63.79.16:6386 --cluster-replicas 1 --cluster-yes
     depends_on:
       - redis-node-1
       - redis-node-2
